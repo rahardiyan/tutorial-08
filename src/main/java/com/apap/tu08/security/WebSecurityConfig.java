@@ -20,9 +20,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 			.antMatchers("/css/**").permitAll()
 			.antMatchers("/js/**").permitAll()
-			//.antMatchers("/user/updatePass").permitAll()
+			.antMatchers("/user/updatePass").permitAll()
 			.antMatchers("/flight/**").hasAnyAuthority("PILOT")
-			//.antMatchers("/pilot/**").hasAnyAuthority("ADMIN")
+			.antMatchers("/pilot/**").hasAnyAuthority("ADMIN")
 			.anyRequest().authenticated()
 			.and()
 			.formLogin()
@@ -33,21 +33,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.permitAll();
 	}
 	
-	//@Autowired
-	//private UserDetailsService userDS;
 	
-	//@Autowired
-	//public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-		//auth.userDetailsService(userDS).passwordEncoder(encoder());
-//	}
 	
-	//@Autowired
-	//public void configureGlobal (AuthenticationManagerBuilder auth) throws Exception{
-		//auth.inMemoryAuthentication()
-		//.passwordEncoder(encoder())
-		//.withUser("cokicoki").password(encoder().encode("enaksekali"))
-		//.roles("USER");
-//	}
+	
+	@Autowired
+	public void configureGlobal (AuthenticationManagerBuilder auth) throws Exception{
+		auth.inMemoryAuthentication()
+		.passwordEncoder(encoder())
+		.withUser("cokicoki").password(encoder().encode("enaksekali"))
+		.roles("USER");
+	}
 	
 	@Bean
 	public BCryptPasswordEncoder encoder() {
